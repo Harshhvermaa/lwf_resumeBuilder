@@ -183,7 +183,7 @@ export default function Step2Upload() {
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />
           </button>
-          <span className="text-lg font-semibold text-slate-900">CVLuck</span>
+          <span className="text-lg font-semibold text-slate-900">JobOnlink</span>
         </div>
       </nav>
 
@@ -277,7 +277,7 @@ export default function Step2Upload() {
                       <div>
                         <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-100">
                           <Sparkles className="h-3.5 w-3.5" />
-                          CVLuck AI Extraction
+                          JobOnlink AI Extraction
                         </div>
                         <h3 className="mt-3 text-xl font-bold">Preparing your resume details</h3>
                         <p className="mt-1 text-sm text-slate-300">

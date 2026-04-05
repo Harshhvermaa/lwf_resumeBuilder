@@ -16,7 +16,6 @@ import {
   User,
   Briefcase,
   RefreshCw,
-  Globe2,
   Users,
 } from 'lucide-react';
 import ResumeTemplate from '../components/ResumeTemplate';
@@ -239,7 +238,7 @@ const testimonials = [
   {
     name: 'Amit S.',
     role: 'Sales Lead',
-    quote: 'Got more interview calls after switching to CVLuck!',
+    quote: 'Got more interview calls after switching to JobOnlink!',
   },
   {
     name: 'Fatima Z.',
@@ -255,12 +254,12 @@ const testimonials = [
 
 const faqs = [
   {
-    q: 'Is CVLuck ATS friendly?',
+    q: 'Is JobOnlink ATS friendly?',
     a: 'Yes. Every resume is structured for ATS parsing with clean, readable formatting.',
   },
   {
     q: 'Can I upload my existing resume?',
-    a: 'Yes. Upload a PDF and CVLuck will extract and improve the content.',
+    a: 'Yes. Upload a PDF and JobOnlink will extract and improve the content.',
   },
   {
     q: 'Can I edit before download?',
@@ -359,7 +358,7 @@ export default function Home() {
               <FileText className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-xl font-black tracking-tight text-slate-950">CVLuck</p>
+              <p className="text-xl font-black tracking-tight text-slate-950">JobOnlink</p>
               <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Job-First AI Resume Builder</p>
             </div>
           </div>
@@ -474,11 +473,11 @@ export default function Home() {
         {/* ...existing code... */}
 
         <section className="mx-auto mt-16 max-w-6xl rounded-[32px] border border-slate-200 bg-white p-8 shadow-[0_24px_60px_rgba(15,23,42,0.1)]">
-          <h2 className="text-3xl font-black text-slate-900">Why CVLuck is different</h2>
+          <h2 className="text-3xl font-black text-slate-900">Why JobOnlink is different</h2>
           <p className="mt-2 text-slate-600">Job-first AI vs. generic resume builders.</p>
           <div className="mt-6 grid gap-6 lg:grid-cols-2">
             <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
-              <p className="text-sm font-semibold uppercase text-emerald-700">CVLuck</p>
+              <p className="text-sm font-semibold uppercase text-emerald-700">JobOnlink</p>
               <ul className="mt-3 space-y-2 text-sm text-emerald-900">
                 <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5" />Job-specific resumes</li>
                 <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5" />AI-enhanced content</li>
@@ -573,7 +572,7 @@ export default function Home() {
         </section>
 
         <section className="mx-auto mt-16 max-w-6xl">
-          <h2 className="text-3xl font-black text-slate-900">AI intelligence inside CVLuck</h2>
+          <h2 className="text-3xl font-black text-slate-900">AI intelligence inside JobOnlink</h2>
           <p className="mt-2 text-slate-600">Everything the AI improves for you.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {aiHighlights.map((item) => (
@@ -594,7 +593,7 @@ export default function Home() {
         {/* Success Stories Section - Slider */}
         <section className="mx-auto mt-16 max-w-6xl rounded-[32px] border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-blue-100 p-8 shadow-[0_24px_60px_rgba(56,189,248,0.08)]">
           <h2 className="text-3xl font-black text-slate-900">Success Stories</h2>
-          <p className="mt-2 text-slate-600">Real users. Real results. See how CVLuck helped job seekers land interviews and offers.</p>
+          <p className="mt-2 text-slate-600">Real users. Real results. See how JobOnlink helped job seekers land interviews and offers.</p>
           <div className="mt-8 overflow-x-auto scrollbar-hide">
             <div className="flex gap-6 min-w-[700px] pb-2">
               {testimonials.map((item, idx) => (
@@ -612,8 +611,8 @@ export default function Home() {
         </section>
 
         <section className="mx-auto mt-16 max-w-6xl">
-          <h2 className="text-3xl font-black text-slate-900">Who is CVLuck for?</h2>
-          <p className="mt-2 text-slate-600 max-w-2xl">CVLuck helps job seekers at every stage. Whether you’re just starting out, switching careers, or applying at scale, there’s a template and AI flow for you.</p>
+          <h2 className="text-3xl font-black text-slate-900">Who is JobOnlink for?</h2>
+          <p className="mt-2 text-slate-600 max-w-2xl">JobOnlink helps job seekers at every stage. Whether you’re just starting out, switching careers, or applying at scale, there’s a template and AI flow for you.</p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {audiences.map((audience, idx) => (
               <div
@@ -717,9 +716,9 @@ export default function Home() {
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-8 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-lg font-bold text-slate-900">CVLuck</p>
+            <p className="text-lg font-bold text-slate-900">JobOnlink</p>
             <p className="text-sm text-slate-500">Job-description-first AI resume builder.</p>
-            <p className="mt-2 text-xs text-slate-400">© 2026 CVLuck. All rights reserved.</p>
+            <p className="mt-2 text-xs text-slate-400">© 2026 JobOnlink. All rights reserved.</p>
           </div>
           <div className="flex flex-wrap gap-4 text-sm font-semibold text-slate-600">
             <button onClick={() => navigate('/')}>Home</button>

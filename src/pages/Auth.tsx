@@ -48,7 +48,7 @@ export default function Auth() {
             {isLogin ? 'Welcome back' : 'Create account'}
           </h2>
           <p className="text-slate-600 text-center mb-8">
-            {isLogin ? 'Sign in to continue building your resume' : 'Get started with CVLuck'}
+            {isLogin ? 'Sign in to continue building your resume' : 'Get started with JobOnlink'}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">

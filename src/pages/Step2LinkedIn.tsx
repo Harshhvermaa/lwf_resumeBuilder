@@ -186,7 +186,7 @@ export default function Step2LinkedIn() {
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />
           </button>
-          <span className="text-lg font-semibold text-slate-900">CVLuck</span>
+          <span className="text-lg font-semibold text-slate-900">JobOnlink</span>
         </div>
       </nav>
 

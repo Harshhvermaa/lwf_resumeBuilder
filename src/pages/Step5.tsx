@@ -86,7 +86,7 @@ export default function Step5() {
       const imgData = canvas.toDataURL('image/png');
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-      const fileName = `CVLuck_Resume_${resumeData.name?.replace(/\s+/g, '_') || 'Document'}.pdf`;
+      const fileName = `JobOnlink_Resume_${resumeData.name?.replace(/\s+/g, '_') || 'Document'}.pdf`;
       pdf.save(fileName);
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -191,7 +191,7 @@ export default function Step5() {
       const blob = await Packer.toBlob(doc);
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `CVLuck_Resume_${resumeData.name?.replace(/\s+/g, '_') || 'Document'}.docx`;
+      link.download = `JobOnlink_Resume_${resumeData.name?.replace(/\s+/g, '_') || 'Document'}.docx`;
       link.click();
       URL.revokeObjectURL(link.href);
     };
@@ -242,7 +242,7 @@ export default function Step5() {
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />
           </button>
-          <span className="text-lg font-semibold text-slate-900">CVLuck</span>
+          <span className="text-lg font-semibold text-slate-900">JobOnlink</span>
         </div>
       </nav>
 

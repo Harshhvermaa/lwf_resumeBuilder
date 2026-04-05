@@ -2,7 +2,7 @@
   # Create Resumes Table
 
   ## Overview
-  This migration creates the core database structure for CVLuck, a SaaS resume builder application.
+  This migration creates the core database structure for JobOnlink, a SaaS resume builder application.
 
   ## New Tables
   

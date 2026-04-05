@@ -223,7 +223,7 @@ export default function Step4() {
             <button onClick={handleBack} className="rounded-lg p-2 transition-colors hover:bg-slate-100">
               <ArrowLeft className="h-5 w-5 text-slate-700" />
             </button>
-            <span className="text-lg font-semibold text-slate-900">CVLuck</span>
+            <span className="text-lg font-semibold text-slate-900">JobOnlink</span>
           </div>
 
           <div className="flex items-center gap-3">
