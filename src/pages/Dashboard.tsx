@@ -4,8 +4,16 @@ import { ArrowLeft, FileText, Plus, Calendar, Download, CreditCard as Edit, Tras
 import { useAuth } from '../contexts/AuthContext';
 import { supabase, ResumeData } from '../lib/supabase';
 import { getJobDescription, normalizeResumeData } from '../lib/resumeData';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Dashboard() {
+  usePageMeta({
+    title: 'Dashboard',
+    description: 'Manage your saved resumes and continue editing from the JobOnlink dashboard.',
+    canonicalPath: ROUTES.dashboard,
+  });
+
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [resumes, setResumes] = useState<ResumeData[]>([]);
@@ -98,7 +106,7 @@ export default function Dashboard() {
         </div>
 
         <button
-          onClick={() => navigate('/step1')}
+          onClick={() => navigate(ROUTES.step1)}
           className="mb-8 flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:shadow-lg transition-all font-semibold text-lg"
         >
           <Plus className="w-5 h-5" />
@@ -122,7 +130,7 @@ export default function Dashboard() {
             <h3 className="text-xl font-bold text-slate-900 mb-2">No resumes yet</h3>
             <p className="text-slate-600 mb-6">Start by creating your first job-tailored resume</p>
             <button
-              onClick={() => navigate('/step1')}
+              onClick={() => navigate(ROUTES.step1)}
               className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               <Plus className="w-4 h-4" />
@@ -156,14 +164,14 @@ export default function Dashboard() {
 
                 <div className="flex gap-2">
                   <button
-                    onClick={() => navigate('/step4', { state: { resumeData: resume } })}
+                    onClick={() => navigate(ROUTES.step4, { state: { resumeData: resume } })}
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                   >
                     <Edit className="w-4 h-4" />
                     Edit
                   </button>
                   <button
-                    onClick={() => navigate('/step5', { state: { resumeData: resume } })}
+                    onClick={() => navigate(ROUTES.step5, { state: { resumeData: resume } })}
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors text-sm font-medium"
                   >
                     <Download className="w-4 h-4" />

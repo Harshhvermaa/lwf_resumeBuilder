@@ -5,6 +5,8 @@ import ResumeTemplate from '../components/ResumeTemplate';
 import JobDescriptionModal from '../components/JobDescriptionModal';
 import { useAuth } from '../contexts/AuthContext';
 import { normalizeResumeData } from '../lib/resumeData';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 const templates = [
   {
@@ -161,6 +163,12 @@ const sampleResumeData = normalizeResumeData({
 const previewScale = 0.4; // Scale down the template preview for better fit
 
 export default function Templates() {
+  usePageMeta({
+    title: 'Resume Templates',
+    description: 'Browse ATS-friendly resume templates designed for modern job applications on JobOnlink.',
+    canonicalPath: ROUTES.templates,
+  });
+
   const navigate = useNavigate();
   const { user } = useAuth();
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
@@ -170,7 +178,7 @@ export default function Templates() {
 
   const handleTemplateSelect = (templateId: string) => {
     if (!user) {
-      navigate('/auth', { state: { from: '/templates', templateId } });
+      navigate(ROUTES.login, { state: { from: ROUTES.templates, templateId } });
       return;
     }
     setSelectedTemplate(templateId);
@@ -178,7 +186,7 @@ export default function Templates() {
   };
 
   const handleJobDescriptionSubmit = (jobDescription: string) => {
-    navigate('/step2-scratch', {
+    navigate(ROUTES.step2Scratch, {
       state: {
         jobDescription,
         templateId: selectedTemplate,
@@ -191,7 +199,7 @@ export default function Templates() {
       <nav className="border-b border-slate-200 bg-white sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(ROUTES.home)}
             className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors group"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
@@ -199,7 +207,7 @@ export default function Templates() {
           </button>
           {!user && (
             <button
-              onClick={() => navigate('/auth')}
+              onClick={() => navigate(ROUTES.login)}
               className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium text-sm"
             >
               Sign In

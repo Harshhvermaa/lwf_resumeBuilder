@@ -4,6 +4,8 @@ import { Upload, ArrowLeft, FileText, Loader2, AlertTriangle, CheckCircle2, Spar
 import StepProgress from '../components/StepProgress';
 import { extractResumeDataFromText, extractTextFromPdf } from '../lib/resumeExtraction';
 import { extractResumeWithAI } from '../lib/resumeAi';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 const extractionSteps = [
   { label: 'Scanning resume layout', detail: 'Reading sections and page structure' },
@@ -25,6 +27,12 @@ export default function Step2Upload() {
   const navigate = useNavigate();
   const location = useLocation();
   const jobDescription = (location.state as any)?.jobDescription || '';
+
+  usePageMeta({
+    title: 'Resume Details',
+    description: 'Upload your existing resume and let JobOnlink extract and optimize the details.',
+    canonicalPath: ROUTES.step2Upload,
+  });
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -154,7 +162,7 @@ export default function Step2Upload() {
         return;
       }
 
-      navigate('/step3', {
+      navigate(ROUTES.step3, {
         state: {
           resumeData: resolvedResumeData,
         },
@@ -170,7 +178,7 @@ export default function Step2Upload() {
   };
 
   const handleContinueFromScratch = () => {
-    navigate('/step2-scratch', { state: { jobDescription } });
+    navigate(ROUTES.step2Scratch, { state: { jobDescription } });
   };
 
   return (
@@ -178,7 +186,7 @@ export default function Step2Upload() {
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 backdrop-blur-sm bg-white/90">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <button
-            onClick={() => navigate('/step1', { state: { jobDescription } })}
+            onClick={() => navigate(ROUTES.step1, { state: { jobDescription } })}
             className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />

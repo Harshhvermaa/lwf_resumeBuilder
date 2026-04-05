@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Plus, X, Sparkles, Loader2, AlertTriangle } from 'lucide-react';
 import StepProgress from '../components/StepProgress';
 import { normalizeResumeData } from '../lib/resumeData';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 import {
   generateExperienceFallback,
   generateSummaryFallback,
@@ -16,6 +18,12 @@ export default function Step2Scratch() {
   const location = useLocation();
   const jobDescription = (location.state as any)?.jobDescription || '';
   const templateId = (location.state as any)?.templateId || 'modern';
+
+  usePageMeta({
+    title: 'Build Resume From Scratch',
+    description: 'Add your resume information manually and build a structured resume from scratch in JobOnlink.',
+    canonicalPath: ROUTES.step2Scratch,
+  });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -51,7 +59,7 @@ export default function Step2Scratch() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/step3', { state: { resumeData: buildResumeData() } });
+    navigate(ROUTES.step3, { state: { resumeData: buildResumeData() } });
   };
 
   const addSkill = () => {
@@ -195,7 +203,7 @@ export default function Step2Scratch() {
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 backdrop-blur-sm bg-white/90">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <button
-            onClick={() => navigate('/step1', { state: { jobDescription } })}
+            onClick={() => navigate(ROUTES.step1, { state: { jobDescription } })}
             className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />

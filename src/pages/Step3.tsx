@@ -6,6 +6,8 @@ import ResumeTemplate from '../components/ResumeTemplate';
 import JobContextBanner from '../components/JobContextBanner';
 import { getJobDescription, normalizeResumeData } from '../lib/resumeData';
 import AILoadingAnimation from '../components/AILoadingAnimation';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 import {
   tailorResumeWithAI,
   generateSummaryFromContext,
@@ -160,6 +162,12 @@ const sampleResumeData = normalizeResumeData({
 });
 
 export default function Step3() {
+  usePageMeta({
+    title: 'Choose Template',
+    description: 'Select the resume template you want to use for your JobOnlink resume.',
+    canonicalPath: ROUTES.step3,
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
   const resumeData = normalizeResumeData((location.state as any)?.resumeData || {});
@@ -279,7 +287,7 @@ export default function Step3() {
           template_id: selectedTemplate,
         };
 
-        navigate('/step4', {
+        navigate(ROUTES.step4, {
           state: {
             resumeData: finalResumeData,
           },

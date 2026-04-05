@@ -1,18 +1,26 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Upload, PenTool, ArrowLeft, Linkedin } from 'lucide-react';
 import StepProgress from '../components/StepProgress';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Step1() {
   const navigate = useNavigate();
   const location = useLocation();
   const jobDescription = (location.state as any)?.jobDescription || '';
 
+  usePageMeta({
+    title: 'Job Basic Info',
+    description: 'Choose how you want to start building your resume on JobOnlink.',
+    canonicalPath: ROUTES.step1,
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-white">
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 backdrop-blur-sm bg-white/90">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(ROUTES.home)}
             className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />
@@ -35,7 +43,7 @@ export default function Step1() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <button
-            onClick={() => navigate('/step2-upload', { state: { jobDescription } })}
+            onClick={() => navigate(ROUTES.step2Upload, { state: { jobDescription } })}
             className="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-blue-500 hover:shadow-xl transition-all text-left group"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200">
@@ -67,7 +75,7 @@ export default function Step1() {
           </button>
 
           <button
-            onClick={() => navigate('/step2-linkedin', { state: { jobDescription } })}
+            onClick={() => navigate(ROUTES.step2LinkedIn, { state: { jobDescription } })}
             className="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-blue-500 hover:shadow-xl transition-all text-left group"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200">
@@ -103,7 +111,7 @@ export default function Step1() {
           </button>
 
           <button
-            onClick={() => navigate('/step2-scratch', { state: { jobDescription } })}
+            onClick={() => navigate(ROUTES.step2Scratch, { state: { jobDescription } })}
             className="bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-blue-500 hover:shadow-xl transition-all text-left group"
           >
             <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200">

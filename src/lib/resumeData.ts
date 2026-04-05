@@ -115,3 +115,20 @@ export function toResumeInsertPayload(resumeData: ResumeData, userId: string) {
     template_id: normalized.template_id,
   };
 }
+
+export function withoutProfileImage<T extends Record<string, unknown>>(payload: T): Omit<T, 'profile_image'> {
+  const { profile_image, ...rest } = payload;
+  void profile_image;
+  return rest;
+}
+
+export function isMissingProfileImageColumnError(error: unknown) {
+  if (!error || typeof error !== 'object') return false;
+
+  const maybeError = error as { code?: string; message?: string };
+  return (
+    maybeError.code === 'PGRST204' &&
+    typeof maybeError.message === 'string' &&
+    maybeError.message.includes('profile_image')
+  );
+}

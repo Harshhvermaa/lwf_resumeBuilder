@@ -22,6 +22,8 @@ import ResumeTemplate from '../components/ResumeTemplate';
 import { normalizeResumeData } from '../lib/resumeData';
 import { useAuth } from '../contexts/AuthContext';
 import JobDescriptionModal from '../components/JobDescriptionModal';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 type TemplateCard = {
   id: string;
@@ -271,6 +273,26 @@ const faqs = [
   },
 ];
 export default function Home() {
+  usePageMeta({
+    title: 'AI Resume Builder',
+    description: 'Build ATS-friendly resumes tailored to the exact job description with JobOnlink.',
+    canonicalPath: ROUTES.home,
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'JobOnlink',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      description: 'JobOnlink creates ATS-friendly resumes tailored to the provided job description.',
+      url: 'https://www.jobonlink.com/',
+    },
+  });
+
   const [jobDescription, setJobDescription] = useState('');
   const [showJobModal, setShowJobModal] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
@@ -308,20 +330,20 @@ export default function Home() {
       return;
     }
     setShowJDValidation(false);
-    navigate('/step1', { state: { jobDescription } });
+    navigate(ROUTES.step1, { state: { jobDescription } });
   };
 
   // For the modal flow (login required, can skip JD)
   const handleGetStarted = () => {
     if (!user) {
-      navigate('/auth');
+      navigate(ROUTES.login);
       return;
     }
     if (!jobDescription.trim()) {
       setShowJobModal(true);
       return;
     }
-    navigate('/step1', { state: { jobDescription } });
+    navigate(ROUTES.step1, { state: { jobDescription } });
   };
 
 
@@ -329,16 +351,16 @@ export default function Home() {
     setJobDescription(jd);
     setShowJobModal(false);
     if (selectedTemplateId) {
-      navigate('/step1', { state: { jobDescription: jd, templateId: selectedTemplateId } });
+      navigate(ROUTES.step1, { state: { jobDescription: jd, templateId: selectedTemplateId } });
       setSelectedTemplateId('');
     } else {
-      navigate('/step1', { state: { jobDescription: jd } });
+      navigate(ROUTES.step1, { state: { jobDescription: jd } });
     }
   };
 
   const handleJobModalSkip = () => {
     setShowJobModal(false);
-    navigate('/step1', { state: { jobDescription: '' } });
+    navigate(ROUTES.step1, { state: { jobDescription: '' } });
   };
 
   return (
@@ -363,9 +385,9 @@ export default function Home() {
             </div>
           </div>
           <div className="hidden items-center gap-6 text-sm font-semibold text-slate-700 md:flex">
-            <button onClick={() => navigate('/')} className="hover:text-slate-900">Home</button>
-            <button onClick={() => navigate('/templates')} className="hover:text-slate-900">Templates</button>
-            <button onClick={() => navigate('/auth')} className="hover:text-slate-900">Login</button>
+            <button onClick={() => navigate(ROUTES.home)} className="hover:text-slate-900">Home</button>
+            <button onClick={() => navigate(ROUTES.templates)} className="hover:text-slate-900">Templates</button>
+            <button onClick={() => navigate(ROUTES.login)} className="hover:text-slate-900">Login</button>
           </div>
           <button
             onClick={handleGetStarted}
@@ -419,7 +441,7 @@ export default function Home() {
                   <ArrowRight className="h-5 w-5" />
                 </button>
                 <button
-                  onClick={() => navigate('/templates')}
+                  onClick={() => navigate(ROUTES.templates)}
                   className="flex-1 inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white/80 px-8 py-4 text-lg font-bold text-slate-900 transition-all hover:-translate-y-1 hover:scale-105 hover:border-cyan-400 hover:bg-cyan-50/60 focus:ring-2 focus:ring-cyan-200 focus:outline-none"
                 >
                   View Templates
@@ -703,7 +725,7 @@ export default function Home() {
                 Build My Resume
               </button>
               <button
-                onClick={() => navigate('/templates')}
+                onClick={() => navigate(ROUTES.templates)}
                 className="rounded-2xl border border-slate-700 px-6 py-3 text-sm font-semibold text-white"
               >
                 View Templates
@@ -721,11 +743,12 @@ export default function Home() {
             <p className="mt-2 text-xs text-slate-400">© 2026 JobOnlink. All rights reserved.</p>
           </div>
           <div className="flex flex-wrap gap-4 text-sm font-semibold text-slate-600">
-            <button onClick={() => navigate('/')}>Home</button>
-            <button onClick={() => navigate('/templates')}>Templates</button>
-            <button onClick={() => navigate('/auth')}>Login</button>
-            <button>Contact</button>
-            <button>Privacy</button>
+            <button onClick={() => navigate(ROUTES.home)}>Home</button>
+            <button onClick={() => navigate(ROUTES.templates)}>Templates</button>
+            <button onClick={() => navigate(ROUTES.login)}>Login</button>
+            <button onClick={() => navigate(ROUTES.signUp)}>Sign Up</button>
+            <button onClick={() => navigate(ROUTES.contact)}>Contact</button>
+            <button onClick={() => navigate(ROUTES.privacy)}>Privacy</button>
           </div>
         </div>
       </footer>

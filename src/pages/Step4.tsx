@@ -5,9 +5,23 @@ import StepProgress from '../components/StepProgress';
 import JobContextBanner from '../components/JobContextBanner';
 import { useAuth } from '../contexts/AuthContext';
 import { ResumeData, supabase } from '../lib/supabase';
-import { getJobDescription, normalizeResumeData, toResumeInsertPayload } from '../lib/resumeData';
+import {
+  getJobDescription,
+  isMissingProfileImageColumnError,
+  normalizeResumeData,
+  toResumeInsertPayload,
+  withoutProfileImage,
+} from '../lib/resumeData';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Step4() {
+  usePageMeta({
+    title: 'Confirm Details',
+    description: 'Review, edit, and save your AI-enhanced resume details before previewing.',
+    canonicalPath: ROUTES.step4,
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
@@ -20,11 +34,11 @@ export default function Step4() {
 
   const handleBack = () => {
     if (resumeData.id) {
-      navigate('/dashboard');
+      navigate(ROUTES.dashboard);
       return;
     }
 
-    navigate('/step3', { state: { resumeData }, replace: true });
+    navigate(ROUTES.step3, { state: { resumeData }, replace: true });
   };
 
   const handleSave = async () => {
@@ -34,11 +48,20 @@ export default function Step4() {
     setSaveMessage('');
 
     try {
-      const { data, error } = await supabase
+      const payload = toResumeInsertPayload(resumeData, user.id);
+      let { data, error } = await supabase
         .from('resumes')
-        .insert([toResumeInsertPayload(resumeData, user.id)])
+        .insert([payload])
         .select()
         .maybeSingle();
+
+      if (error && isMissingProfileImageColumnError(error)) {
+        ({ data, error } = await supabase
+          .from('resumes')
+          .insert([withoutProfileImage(payload)])
+          .select()
+          .maybeSingle());
+      }
 
       if (error) throw error;
 
@@ -57,7 +80,7 @@ export default function Step4() {
   };
 
   const handleContinue = () => {
-    navigate('/step5', { state: { resumeData }, replace: true });
+    navigate(ROUTES.step5, { state: { resumeData }, replace: true });
   };
 
   const addSkill = () => {

@@ -6,13 +6,27 @@ import jsPDF from 'jspdf';
 import { Document, HeadingLevel, Packer, Paragraph, TextRun } from 'docx';
 import ResumeTemplate from '../components/ResumeTemplate';
 import StepProgress from '../components/StepProgress';
-import { getJobDescription, normalizeResumeData, toResumeInsertPayload } from '../lib/resumeData';
+import {
+  getJobDescription,
+  isMissingProfileImageColumnError,
+  normalizeResumeData,
+  toResumeInsertPayload,
+  withoutProfileImage,
+} from '../lib/resumeData';
 import { compactResumeData } from '../components/templates/templateUtils';
 import { getDescriptionPoints } from '../components/templates/templateUtils';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Step5() {
+  usePageMeta({
+    title: 'Preview and Download',
+    description: 'Preview your final resume, save it, and download it as PDF or DOCX from JobOnlink.',
+    canonicalPath: ROUTES.step5,
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
@@ -60,7 +74,7 @@ export default function Step5() {
   const previewPages = useMemo(() => [0], []);
 
   const handleBackToConfirm = () => {
-    navigate('/step4', { state: { resumeData }, replace: true });
+    navigate(ROUTES.step4, { state: { resumeData }, replace: true });
   };
 
   const handleDownloadPDF = async () => {
@@ -206,18 +220,37 @@ export default function Step5() {
     setSaveError('');
 
     try {
+      const payload = toResumeInsertPayload(resumeData, user.id);
+
       if (resumeData.id) {
-        const { error } = await supabase
+        let { error } = await supabase
           .from('resumes')
-          .update(toResumeInsertPayload(resumeData, user.id))
+          .update(payload)
           .eq('id', resumeData.id);
+
+        if (error && isMissingProfileImageColumnError(error)) {
+          ({ error } = await supabase
+            .from('resumes')
+            .update(withoutProfileImage(payload))
+            .eq('id', resumeData.id));
+        }
+
         if (error) throw error;
       } else {
-        const { data, error } = await supabase
+        let { data, error } = await supabase
           .from('resumes')
-          .insert([toResumeInsertPayload(resumeData, user.id)])
+          .insert([payload])
           .select()
           .maybeSingle();
+
+        if (error && isMissingProfileImageColumnError(error)) {
+          ({ data, error } = await supabase
+            .from('resumes')
+            .insert([withoutProfileImage(payload)])
+            .select()
+            .maybeSingle());
+        }
+
         if (error) throw error;
         void data;
       }

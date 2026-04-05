@@ -4,6 +4,8 @@ import { ArrowLeft, AlertTriangle, CheckCircle2, Linkedin, Loader2, Sparkles, Up
 import StepProgress from '../components/StepProgress';
 import { extractResumeDataFromText, extractTextFromPdf } from '../lib/resumeExtraction';
 import { extractResumeWithAI } from '../lib/resumeAi';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 const extractionSteps = [
   { label: 'Parsing LinkedIn sections', detail: 'Headline, About, Experience, Education' },
@@ -16,6 +18,12 @@ export default function Step2LinkedIn() {
   const navigate = useNavigate();
   const location = useLocation();
   const jobDescription = (location.state as any)?.jobDescription || '';
+
+  usePageMeta({
+    title: 'Import LinkedIn Profile',
+    description: 'Upload your LinkedIn PDF and convert it into an ATS-friendly resume with JobOnlink.',
+    canonicalPath: ROUTES.step2LinkedIn,
+  });
 
   const [linkedinUrl, setLinkedinUrl] = useState('');
   const [file, setFile] = useState<File | null>(null);
@@ -161,7 +169,7 @@ export default function Step2LinkedIn() {
         return;
       }
 
-      navigate('/step3', {
+      navigate(ROUTES.step3, {
         state: {
           resumeData: resolvedResumeData,
         },
@@ -181,7 +189,7 @@ export default function Step2LinkedIn() {
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 backdrop-blur-sm bg-white/90">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <button
-            onClick={() => navigate('/step1', { state: { jobDescription } })}
+            onClick={() => navigate(ROUTES.step1, { state: { jobDescription } })}
             className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-700" />

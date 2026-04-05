@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { LogIn } from 'lucide-react';
+import { ROUTES } from '../lib/routes';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,7 +15,21 @@ export default function Auth() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = (location.state as any)?.from?.pathname || '/step1';
+  const from = (location.state as any)?.from?.pathname || ROUTES.step1;
+  const isSignUpPath = location.pathname === ROUTES.signUp;
+
+  usePageMeta({
+    title: isSignUpPath ? 'Sign Up' : 'Login',
+    description: isSignUpPath
+      ? 'Create your JobOnlink account to build and save ATS-friendly resumes.'
+      : 'Log in to JobOnlink to continue building your AI-optimized resume.',
+    canonicalPath: isSignUpPath ? ROUTES.signUp : ROUTES.login,
+  });
+
+  useEffect(() => {
+    setIsLogin(!isSignUpPath);
+    setError('');
+  }, [isSignUpPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +63,7 @@ export default function Auth() {
           <h2 className="text-2xl font-bold text-slate-900 text-center mb-2">
             {isLogin ? 'Welcome back' : 'Create account'}
           </h2>
+          <h1 className="sr-only">{isLogin ? 'Login to JobOnlink' : 'Sign up for JobOnlink'}</h1>
           <p className="text-slate-600 text-center mb-8">
             {isLogin ? 'Sign in to continue building your resume' : 'Get started with JobOnlink'}
           </p>
@@ -103,6 +120,7 @@ export default function Auth() {
               onClick={() => {
                 setIsLogin(!isLogin);
                 setError('');
+                navigate(isLogin ? ROUTES.signUp : ROUTES.login, { replace: true });
               }}
               className="text-blue-600 hover:text-blue-700 font-medium text-sm"
             >
