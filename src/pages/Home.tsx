@@ -612,7 +612,7 @@ export default function Home() {
 
         <section className="mx-auto mt-16 max-w-6xl">
           <h2 className="text-3xl font-black text-slate-900">Who is JobOnlink for?</h2>
-          <p className="mt-2 text-slate-600 max-w-2xl">JobOnlink helps job seekers at every stage. Whether you’re just starting out, switching careers, or applying at scale, there’s a template and AI flow for you.</p>
+          <p className="mt-2 text-slate-600 max-w-2xl">JobOnlink helps job seekers at every stage. Whether you are just starting out, switching careers, or applying at scale, there’s a template and AI flow for you.</p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {audiences.map((audience, idx) => (
               <div
